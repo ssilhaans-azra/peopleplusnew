@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual Attendance Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'arimo': ['Arimo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+</head>
+<body class="font-arimo bg-white p-6">
+  <div class="relative h-full flex flex-col">
+    <button id="closeModalBtn" class="absolute top-0 right-0 text-gray-400 hover:text-gray-600 transition-colors">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    
+    <h2 class="text-2xl font-bold text-[#9E005D] mb-6">Add Manual Attendance</h2>
+
+    <form id="attendanceForm" class="flex-1 flex flex-col">
+      <div class="mb-4">
+        <label for="employee" class="block text-gray-700 font-medium mb-2">Select Employee</label>
+        <select id="employee" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 transition-all">
+          <option value="">Select an employee</option>
+          <option value="john">John Doe</option>
+          <option value="jane">Jane Smith</option>
+          <option value="mike">Mike Johnson</option>
+          <option value="sarah">Sarah Williams</option>
+          <option value="tom">Tom Brown</option>
+          <option value="emma">Emma Davis</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label for="date" class="block text-gray-700 font-medium mb-2">Select Date</label>
+        <div class="relative">
+          <input type="date" id="date" required class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 transition-all" style="color-scheme: light;">
+          <button type="button" id="dateIconBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9E005D] hover:text-[#7d004a] transition-colors cursor-pointer pointer-events-auto z-10">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="inTime" class="block text-gray-700 font-medium mb-2">In Time</label>
+        <div class="relative">
+          <input type="time" id="inTime" required class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 transition-all" style="color-scheme: light;">
+          <button type="button" id="inTimeIconBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9E005D] hover:text-[#7d004a] transition-colors cursor-pointer pointer-events-auto z-10">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="outTime" class="block text-gray-700 font-medium mb-2">Out Time</label>
+        <div class="relative">
+          <input type="time" id="outTime" required class="w-full px-4 py-2 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 transition-all" style="color-scheme: light;">
+          <button type="button" id="outTimeIconBtn" class="absolute right-3 top-1/2 -translate-y-1/2 text-[#9E005D] hover:text-[#7d004a] transition-colors cursor-pointer pointer-events-auto z-10">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-auto">
+        <button type="submit" class="w-[200px] px-6 py-3 bg-[#9E005D] text-white rounded-lg hover:bg-[#7d004a] transition-colors font-medium">
+          Confirm
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    document.getElementById('dateIconBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dateInput = document.getElementById('date');
+      dateInput.focus();
+      try {
+        dateInput.showPicker();
+      } catch (err) {
+        dateInput.click();
+      }
+    });
+    
+    document.getElementById('inTimeIconBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const timeInput = document.getElementById('inTime');
+      timeInput.focus();
+      try {
+        timeInput.showPicker();
+      } catch (err) {
+        timeInput.click();
+      }
+    });
+
+    document.getElementById('outTimeIconBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const timeInput = document.getElementById('outTime');
+      timeInput.focus();
+      try {
+        timeInput.showPicker();
+      } catch (err) {
+        timeInput.click();
+      }
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+      window.parent.postMessage('closeModal', '*');
+    });
+
+    document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        employee: document.getElementById('employee').value,
+        employeeName: document.getElementById('employee').options[document.getElementById('employee').selectedIndex].text,
+        date: document.getElementById('date').value,
+        inTime: document.getElementById('inTime').value,
+        outTime: document.getElementById('outTime').value
+      };
+
+      if (formData.inTime && formData.outTime) {
+        const inTime = new Date(`2000-01-01 ${formData.inTime}`);
+        const outTime = new Date(`2000-01-01 ${formData.outTime}`);
+        
+        if (outTime <= inTime) {
+          alert('Out time must be after in time!');
+          return;
+        }
+      }
+
+      window.parent.postMessage({
+        type: 'attendanceSubmitted',
+        data: formData
+      }, '*');
+
+      window.parent.postMessage('closeModal', '*');
+    });
+  </script>
+</body>
+</html>

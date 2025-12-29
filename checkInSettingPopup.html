@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check-In Settings Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'arimo': ['Arimo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .toggle-checkbox:checked {
+      background-color: #9E005D;
+      border-color: #9E005D;
+    }
+    .toggle-checkbox:checked + .toggle-slider {
+      transform: translateX(1.25rem);
+    }
+    .toggle-slider {
+      transition: transform 0.3s ease;
+    }
+  </style>
+</head>
+<body class="font-arimo bg-white p-6">
+  <div class="relative max-w-md mx-auto">
+    <button id="closeModalBtn" class="absolute top-0 right-0 text-gray-400 hover:text-gray-600 transition-colors">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+    
+    <h2 class="text-2xl font-bold text-gray-800 mb-2">Check-In Settings</h2>
+    <p class="text-sm text-gray-500 mb-6">Configure the check-in methods available for your employees. Enable or disable specific methods based on your organization's needs.</p>
+
+    <div class="space-y-4">
+      
+      <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i data-lucide="qr-code" class="w-6 h-6 text-[#9E005D]"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">QR Code Check-In</h3>
+            <p class="text-sm text-gray-500">Employees scan QR code to check in/out</p>
+          </div>
+        </div>
+        <label class="relative inline-block w-11 h-6 cursor-pointer">
+          <input type="checkbox" id="qrCode" class="toggle-checkbox sr-only peer" checked>
+          <span class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-[#9E005D] transition-colors"></span>
+          <span class="toggle-slider absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm"></span>
+        </label>
+      </div>
+
+      
+      <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i data-lucide="credit-card" class="w-6 h-6 text-[#9E005D]"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">NFC Card Check-In</h3>
+            <p class="text-sm text-gray-500">Tap NFC cards on readers for attendance</p>
+          </div>
+        </div>
+        <label class="relative inline-block w-11 h-6 cursor-pointer">
+          <input type="checkbox" id="nfcCard" class="toggle-checkbox sr-only peer" checked>
+          <span class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-[#9E005D] transition-colors"></span>
+          <span class="toggle-slider absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm"></span>
+        </label>
+      </div>
+
+      
+      <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i data-lucide="map-pin" class="w-6 h-6 text-[#9E005D]"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">Geolocation Check-In</h3>
+            <p class="text-sm text-gray-500">Location-based check-in via mobile app</p>
+          </div>
+        </div>
+        <label class="relative inline-block w-11 h-6 cursor-pointer">
+          <input type="checkbox" id="geolocation" class="toggle-checkbox sr-only peer" checked>
+          <span class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-[#9E005D] transition-colors"></span>
+          <span class="toggle-slider absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm"></span>
+        </label>
+      </div>
+
+      
+      <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+        <div class="flex items-center gap-4 flex-1">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i data-lucide="clock" class="w-6 h-6 text-[#9E005D]"></i>
+          </div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-gray-800">Auto check-out</h3>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="text-sm text-gray-500">Auto check-out after</span>
+              <div class="relative inline-block">
+                <input type="time" id="autoCheckoutTime" value="20:00" class="text-sm px-2 py-1 pr-8 border border-gray-300 rounded focus:outline-none focus:border-[#9E005D] focus:ring-1 focus:ring-[#9E005D]" style="color-scheme: light;">
+                <button type="button" id="autoCheckoutTimeBtn" class="absolute right-1 top-1/2 -translate-y-1/2 text-[#9E005D] hover:text-[#7d004a] cursor-pointer">
+                  <i data-lucide="clock" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="relative inline-block w-11 h-6 cursor-pointer flex-shrink-0 ml-2">
+          <input type="checkbox" id="autoCheckout" class="toggle-checkbox sr-only peer" checked>
+          <span class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-[#9E005D] transition-colors"></span>
+          <span class="toggle-slider absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm"></span>
+        </label>
+      </div>
+
+
+      <div class="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <i data-lucide="spline-pointer" class="w-6 h-6 text-[#9E005D]"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">Using IP Check-In</h3>
+            <p class="text-sm text-gray-500">IP-based check-in via mobile app</p>
+          </div>
+        </div>
+        <label class="relative inline-block w-11 h-6 cursor-pointer">
+          <input type="checkbox" id="IP" class="toggle-checkbox sr-only peer" checked>
+          <span class="absolute inset-0 bg-gray-300 rounded-full peer-checked:bg-[#9E005D] transition-colors"></span>
+          <span class="toggle-slider absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-sm"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    
+    document.getElementById('autoCheckoutTimeBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const timeInput = document.getElementById('autoCheckoutTime');
+      timeInput.focus();
+      try {
+        timeInput.showPicker();
+      } catch (err) {
+        timeInput.click();
+      }
+    });
+
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+      window.parent.postMessage('closeSettingsModal', '*');
+    });
+
+    
+    function saveSettings() {
+      const settingsData = {
+        qrCode: document.getElementById('qrCode').checked,
+        nfcCard: document.getElementById('nfcCard').checked,
+        geolocation: document.getElementById('geolocation').checked,
+        IP: document.getElementById('IP').checked,
+        autoCheckout: document.getElementById('autoCheckout').checked,
+        autoCheckoutTime: document.getElementById('autoCheckoutTime').value
+      };
+
+      window.parent.postMessage({
+        type: 'settingsSubmitted',
+        data: settingsData
+      }, '*');
+    }
+
+    
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', saveSettings);
+    });
+
+    document.getElementById('autoCheckoutTime').addEventListener('change', saveSettings);
+  </script>
+</body>
+</html>

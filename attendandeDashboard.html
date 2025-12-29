@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>People Plus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'arimo': ['Arimo', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-arimo bg-gray-50">
+    <button id="mobileMenuBtn" class="fixed top-4 left-4 z-50 lg:hidden bg-[#9E005D] p-3 rounded-full shadow-lg hover:bg-[#7d004a] transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-6 h-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" x2="20" y1="12" y2="12"/>
+        <line x1="4" x2="20" y1="6" y2="6"/>
+        <line x1="4" x2="20" y1="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <div class="flex h-screen">
+    
+        <div id="sidebar"></div>
+
+        <div class="flex-1 p-4 md:px-12 overflow-auto lg:ml-0 ml-0 relative">
+          <div class="absolute inset-0 bg-white/20 top-[272px]"></div>
+        
+          <div class="relative z-10">
+            <div class="mb-6 mt-16 lg:mt-0">
+                <div class="flex flex-col lg:flex-row gap-4 bg-white/70 backdrop-blur-sm p-4 md:p-6 rounded-2xl md:rounded-3xl mb-8 items-center justify-between shadow-lg">
+                    <h1 class="text-xl md:text-2xl font-normal text-[#101828]">Attendance Management</h1>
+                    <div class="flex flex-col sm:flex-row items-center gap-4 md:gap-16 w-full lg:w-auto">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 md:w-12 md:h-12 flex items-center justify-center">
+                                <img class="rounded-lg md:rounded-xl w-full h-full object-cover" src="./images/subscriberLogo.png" alt="subscriberLogo">
+                            </div>
+                            <div>
+                                <h3 class="text-[#333333] text-base md:text-lg font-semibold">Company Name</h3>
+                                <p class="text-[#6C6C6C] text-xs md:text-sm">Tech type</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button class="bg-[#9E005D] p-2 md:p-3 rounded-full hover:bg-[#7d004a] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10.268 21a2 2 0 0 0 3.464 0"/>
+                                    <path d="M13.916 2.314A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.74 7.327A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673 9 9 0 0 1-.585-.665"/>
+                                    <circle cx="18" cy="8" r="3"/>
+                                </svg>
+                            </button>
+                            <button class="bg-[#9E005D] p-2 md:p-3 rounded-full hover:bg-[#7d004a] transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="text-white w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-4 md:mb-14">
+                    
+              <div class="flex bg-white backdrop-blur-sm px-4 md:px-6 py-4 md:py-6 rounded-xl items-center shadow-lg hover:shadow-xl transition-shadow">
+                  <div class="flex flex-col bg-[#F3E8FF] p-3 md:p-4 rounded-xl items-center mr-4 md:mr-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="text-[#9E005D]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M10 12h4"/><path d="M10 8h4"/>
+                          <path d="M14 21v-3a2 2 0 0 0-4 0v3"/>
+                          <path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2"/>
+                          <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16"/>
+                      </svg>
+                  </div>
+                  <div class="flex flex-col">
+                      <p class="text-start text-[#4A5565] text-xs md:text-sm font-medium">Present Today</p>
+                      <p class="text-start text-[#9E005D] text-2xl md:text-3xl font-bold">08</p>
+                  </div>
+              </div>
+
+              <div class="flex bg-white backdrop-blur-sm px-6 md:px-6 py-4 md:py-6 rounded-xl items-center shadow-lg hover:shadow-xl transition-shadow">
+                  <div class="flex flex-col bg-[#F3E8FF] p-3 md:p-4 rounded-xl items-center mr-4 md:mr-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="text-[#9E005D]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 21a8 8 0 0 0-16 0"/>
+                          <circle cx="10" cy="8" r="5"/>
+                          <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
+                      </svg>
+                  </div>
+                  <div class="flex flex-col">
+                      <p class="text-start text-[#4A5565] text-xs md:text-sm font-medium">On Time</p>
+                      <p class="text-start text-[#9E005D] text-2xl md:text-3xl font-bold">38</p>
+                  </div>
+              </div>
+
+              <div class="flex bg-white backdrop-blur-sm px-6 md:px-6 py-4 md:py-6 rounded-xl items-center shadow-lg hover:shadow-xl transition-shadow">
+                  <div class="flex flex-col bg-[#F3E8FF] p-3 md:p-4 rounded-xl items-center mr-4 md:mr-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="text-[#9E005D]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 21a8 8 0 0 0-16 0"/>
+                          <circle cx="10" cy="8" r="5"/>
+                          <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
+                      </svg>
+                  </div>
+                  <div class="flex flex-col">
+                      <p class="text-start text-[#4A5565] text-xs md:text-sm font-medium">Late Arrivals</p>
+                      <p class="text-start text-[#9E005D] text-2xl md:text-3xl font-bold">02</p>
+                  </div>
+              </div>
+
+              <div class="flex bg-white backdrop-blur-sm px-4 md:px-6 py-4 md:py-6 rounded-xl items-center shadow-lg hover:shadow-xl transition-shadow">
+                  <div class="flex flex-col bg-[#F3E8FF] p-3 md:p-4 rounded-xl items-center mr-4 md:mr-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="text-[#9E005D]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 21a8 8 0 0 0-16 0"/>
+                          <circle cx="10" cy="8" r="5"/>
+                          <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/>
+                      </svg>
+                  </div>
+                  <div class="flex flex-col">
+                      <p class="text-start text-[#4A5565] text-xs md:text-sm font-medium">Absent</p>
+                      <p class="text-start text-[#9E005D] text-2xl md:text-3xl font-bold">02</p>
+                  </div>
+              </div>
+
+            </div>
+
+            <!--Manual Attendance Section-->
+            
+                <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-end mb-4">
+                    <button id="openAttendanceModalBtn" class="px-4 py-2 flex items-center justify-center border border-black rounded-lg hover:bg-gray-50 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/>
+                            <path d="M12 5v14"/>
+                        </svg>
+                        <p class="ml-2">Add Manual Attendance</p>
+                    </button>
+
+                    <button id="openSettingsModalBtn" class="px-6 py-2 flex items-center justify-center bg-[#9E005D] text-white gap-2 rounded-lg hover:bg-[#7d004a] transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <p>Check-In Settings</p>
+                    </button>
+                </div>
+                <div id="attendanceModalOverlay" class="hidden fixed inset-0 z-[99999] bg-black/50" style="display: none; overflow-y: auto;">
+                <div class="min-h-screen w-full flex items-start justify-center py-8 px-4">
+                    <div class="w-full max-w-[500px]">
+                        <iframe 
+                            id="attendanceModalIframe" 
+                            src="manualAttendancePopup.html" 
+                            class="w-full border-0 rounded-xl bg-white shadow-2xl block"
+                            scrolling="no"
+                            style="height: 10vh; min-height: 520px; border: none;">
+                        </iframe>
+                    </div>
+                </div>
+                
+            </div>
+        
+            <div class="flex bg-white px-6 py-4 intems-center justify-between rounded-2xl shadow-lg hover:shadow-xl transition-shadow mb-6">
+                <div class="relative">
+                    <i data-lucide="search" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                    <input type="text" id="searchInput" placeholder="Search..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20">
+                </div>
+                <div class="relative">
+                    <select id="activityFilter" class="appearance-none bg-[#F3F4F6] border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 cursor-pointer transition-all">
+                        <option value="all">All Department</option>
+                        <option value="attendance">Attendance</option>
+                        <option value="leave">Leave</option>
+                        <option value="employee">Employee</option>
+                        <option value="shift">Shift</option>
+                        <option value="payroll">Payroll</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-gray-700"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Modal - FIXED VERSION -->
+            <div id="settingsModalOverlay" class="hidden fixed inset-0 z-[99999] bg-black/50" style="display: none; overflow-y: auto;">
+                <div class="min-h-screen w-full flex items-start justify-center py-8 px-4">
+                    <div class="w-full max-w-[550px]">
+                        <iframe 
+                            id="settingsModalIframe" 
+                            src="checkInSettingPopup.html" 
+                            class="w-full border-0 rounded-xl bg-white shadow-2xl block"
+                            scrolling="no"
+                            style="height: 10vh; min-height: 650px; border: none;">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <div id="attendanceRecordsContainer"></div>
+          </div>
+
+        </div>
+
+    </div>
+
+   <script src="./components/sidebar.js"></script>
+   <script src="./components/attendanceRecord.js"></script>
+
+<script>
+    const attendanceModalOverlay = document.getElementById("attendanceModalOverlay");
+    const settingsModalOverlay = document.getElementById("settingsModalOverlay");
+    const attendanceModalIframe = document.getElementById("attendanceModalIframe");
+    const settingsModalIframe = document.getElementById("settingsModalIframe");
+    const openAttendanceModalBtn = document.getElementById("openAttendanceModalBtn");
+    const openSettingsModalBtn = document.getElementById("openSettingsModalBtn");
+
+    function adjustIframeHeight(iframe) {
+        try {
+            if (iframe.contentWindow && iframe.contentWindow.document.body) {
+                const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+                iframe.style.height = (contentHeight + 20) + 'px';
+            }
+        } catch (e) {
+            console.log('Cannot adjust iframe height due to cross-origin restrictions');
+        }
+    }
+
+    window.addEventListener('message', function(event) {
+        if (event.data && event.data.type === 'iframeResize') {
+            const targetIframe = event.data.modal === 'attendance' ? attendanceModalIframe : settingsModalIframe;
+            if (targetIframe && event.data.height) {
+                targetIframe.style.height = event.data.height + 'px';
+            }
+        }
+    });
+
+    openAttendanceModalBtn.onclick = function() {
+        attendanceModalOverlay.style.display = 'block';
+        attendanceModalOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        const currentSrc = attendanceModalIframe.src;
+        attendanceModalIframe.src = currentSrc;
+        
+        attendanceModalIframe.onload = function() {
+            setTimeout(() => adjustIframeHeight(attendanceModalIframe), 200);
+        };
+    }
+
+    openSettingsModalBtn.onclick = function() {
+        settingsModalOverlay.style.display = 'block';
+        settingsModalOverlay.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        const currentSrc = settingsModalIframe.src;
+        settingsModalIframe.src = currentSrc;
+        
+        settingsModalIframe.onload = function() {
+            setTimeout(() => adjustIframeHeight(settingsModalIframe), 200);
+        };
+    }
+
+    attendanceModalOverlay.onclick = function(event) {
+        if (event.target === attendanceModalOverlay || event.target === attendanceModalOverlay.firstElementChild) {
+            attendanceModalOverlay.style.display = 'none';
+            attendanceModalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    settingsModalOverlay.onclick = function(event) {
+        if (event.target === settingsModalOverlay || event.target === settingsModalOverlay.firstElementChild) {
+            settingsModalOverlay.style.display = 'none';
+            settingsModalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+
+    window.addEventListener('message', function(event) {
+        if (event.data === 'closeModal') {
+            attendanceModalOverlay.style.display = 'none';
+            attendanceModalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        } 
+        else if (event.data === 'closeSettingsModal') {
+            settingsModalOverlay.style.display = 'none';
+            settingsModalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        else if (event.data.type === 'resize') {
+            const iframe = event.data.modal === 'attendance' ? attendanceModalIframe : settingsModalIframe;
+            if (iframe && event.data.height) {
+                iframe.style.height = Math.min(event.data.height, window.innerHeight - 100) + 'px';
+            }
+        }
+        else if (event.data.type === 'attendanceSubmitted') {
+            console.log('Attendance data received:', event.data.data);
+            
+            const tableBody = document.getElementById('attendanceTableBody');
+            if (tableBody) {
+                const newRow = document.createElement('tr');
+                newRow.className = 'border-b border-gray-100 hover:bg-gray-50';
+                
+                const data = event.data.data;
+                const formatTime = (time) => {
+                    const [hours, minutes] = time.split(':');
+                    const hour = parseInt(hours);
+                    const ampm = hour >= 12 ? 'PM' : 'AM';
+                    const displayHour = hour % 12 || 12;
+                    return `${displayHour}:${minutes} ${ampm}`;
+                };
+                
+                newRow.innerHTML = `
+                    <td class="py-3 px-4 text-gray-700">${data.employeeName}</td>
+                    <td class="py-3 px-4 text-gray-700">${data.date}</td>
+                    <td class="py-3 px-4 text-gray-700">${formatTime(data.inTime)}</td>
+                    <td class="py-3 px-4 text-gray-700">${formatTime(data.outTime)}</td>
+                    <td class="py-3 px-4"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Manual Entry</span></td>
+                `;
+                
+                tableBody.insertBefore(newRow, tableBody.firstChild);
+            }
+            
+            alert('Attendance record added successfully!');
+        }
+        else if (event.data.type === 'settingsSubmitted') {
+            console.log('Settings data received:', event.data.data);
+            alert('Check-in settings saved successfully!');
+        }
+    });
+
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#attendanceTableBody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    }
+
+    const activityFilter = document.getElementById('activityFilter');
+    if (activityFilter) {
+        activityFilter.addEventListener('change', function(e) {
+            console.log('Selected department:', e.target.value);
+        });
+    }
+   </script>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+    
+            lucide.createIcons();
+
+      if (typeof renderSidebar === 'function') {
+        renderSidebar();
+      }
+      if (typeof renderRecentActivity === 'function') {
+        renderRecentActivity();
+      }
+            
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      
+      if (mobileMenuBtn && sidebar && sidebarOverlay) {
+        mobileMenuBtn.addEventListener('click', function() {
+          sidebar.classList.toggle('active');
+          sidebarOverlay.classList.toggle('active');
+        });
+        
+        sidebarOverlay.addEventListener('click', function() {
+          sidebar.classList.remove('active');
+          sidebarOverlay.classList.remove('active');
+        });
+      }
+      
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('sidebar-minimized');
+        });
+      }
+    });
+  </script>
+</body>
+</html>

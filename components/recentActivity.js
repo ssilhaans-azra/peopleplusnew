@@ -57,11 +57,11 @@ function renderRecentActivity() {
   ];
 
   const activityHTML = `
-    <div class="bg-white/90 backdrop-blur-sm p-6 rounded-xl shadow-lg">
+    <div class="bg-white backdrop-blur-sm p-6 rounded-xl shadow-lg">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-xl font-semibold text-gray-800">Recent Activity</h2>
         <div class="relative">
-          <select id="activityFilter" class="appearance-none bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 cursor-pointer transition-all">
+          <select id="activityFilter" class="appearance-none bg-[#F3F4F6] border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:border-[#9E005D] focus:ring-2 focus:ring-[#9E005D]/20 cursor-pointer transition-all">
             <option value="all">All Activities</option>
             <option value="attendance">Attendance</option>
             <option value="leave">Leave</option>
